@@ -1,0 +1,21 @@
+# Python / Environment
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.venv/
+env/
+venv/
+.env
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Data and Results (Uncomment if files are too large for GitHub)
+# data/raw/*
+# data/processed/*
+# results/*
+
+# OS specific files
+.DS_Store
+Thumbs.db
