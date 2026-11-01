@@ -19,6 +19,7 @@ import matplotlib
 matplotlib.use("Agg")  # save figures to files; no window needed
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from sklearn.metrics import precision_recall_curve
 
 sys.path.append(str(Path(__file__).resolve().parent))
@@ -35,15 +36,17 @@ FIG_DIR.mkdir(parents=True, exist_ok=True)
 # ---------------------------------------------------------------------------
 # Section 1: B3 threshold fitting (training data only)
 # ---------------------------------------------------------------------------
-def fit_residual_threshold(train_df):
-    """Find the residual-load cut-off (MW) that maximises F1 on the training set.
+def fit_residual_threshold(train_df, col="residual_load"):
+    """Find the cut-off (MW) on `col` that maximises F1 on the training set.
 
-    Lower residual load = more negative prices, so we use score = -residual_load
+    Lower residual load = more negative prices, so we use score = -col
     (higher score = more likely negative) and sweep every possible cut-off with
-    precision_recall_curve. Returns (threshold_MW, sweep_table_for_plotting).
+    precision_recall_curve. Rows where `col` is missing are ignored.
+    Returns (threshold_MW, sweep_table_for_plotting).
     """
-    y = train_df["target"].astype(int).to_numpy()
-    score = -train_df["residual_load"].to_numpy()
+    d = train_df[[col, "target"]].dropna()
+    y = d["target"].astype(int).to_numpy()
+    score = -d[col].to_numpy()
     precision, recall, thr = precision_recall_curve(y, score)
     # precision/recall have one more entry than thr, so drop the last point
     p, r = precision[:-1], recall[:-1]
@@ -82,9 +85,13 @@ def run(eval_name="val"):
     train = get_split(data, "train")
     evl = get_split(data, eval_name, allow_test=(eval_name == "test"))
 
-    # Fit B3 two ways: all training years, and excluding the 2022 crisis year
-    thr_all, sweep = fit_residual_threshold(train)
-    thr_no22, _ = fit_residual_threshold(train[train["flag_2022"] == 0])
+    # "Development data" = everything the rule may learn from. For the final test run
+    # this includes 2024, exactly like the ML models in models.py, so the comparison is fair.
+    dev = pd.concat([train, get_split(data, "val")]) if eval_name == "test" else train
+
+    # Fit B3 two ways: all development years, and excluding the 2022 crisis year
+    thr_all, sweep = fit_residual_threshold(dev)
+    thr_no22, _ = fit_residual_threshold(dev[dev["flag_2022"] == 0])
     print(f"B3 threshold (all train years): {thr_all:,.0f} MW")
     print(f"B3 threshold (excluding 2022):  {thr_no22:,.0f} MW")
 
