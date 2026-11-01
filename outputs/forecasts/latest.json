@@ -1,0 +1,693 @@
+{
+  "target_date": "2026-09-12",
+  "source": "replay",
+  "generated_at_utc": "2026-11-01T14:18:59.003431+00:00",
+  "before_gate_closure": null,
+  "default_threshold": 0.5,
+  "model": {
+    "type": "logistic regression",
+    "trained_as_of": "2026-08-31T22:00:00+00:00",
+    "window_days": 365,
+    "C": 0.1,
+    "n_train": 8759,
+    "n_train_negative": 544,
+    "train_last_hour_utc": "2026-08-31T21:00:00+00:00",
+    "features": [
+      "load_forecast",
+      "solar_forecast",
+      "wind_total_forecast",
+      "residual_load",
+      "res_share",
+      "renewable_share",
+      "is_weekend",
+      "is_holiday",
+      "price_lag_24",
+      "price_lag_168",
+      "neg_count_prev_day",
+      "price_prev_day_mean",
+      "hour_sin",
+      "hour_cos",
+      "month_sin",
+      "month_cos",
+      "FR_residual",
+      "NL_residual",
+      "BE_residual",
+      "DK_1_residual",
+      "DK_2_residual",
+      "AT_residual",
+      "CZ_residual",
+      "PL_residual",
+      "CH_residual",
+      "nb_residual_sum",
+      "nb_load_sum",
+      "nb_res_share",
+      "coupled_residual",
+      "coupled_res_share"
+    ]
+  },
+  "status": {
+    "level": "ok",
+    "neighbour_hours_filled": 0,
+    "neighbour_series_used": [
+      "AT_load",
+      "AT_solar",
+      "AT_wind",
+      "BE_load",
+      "BE_solar",
+      "BE_wind",
+      "CH_load",
+      "CH_solar",
+      "CH_wind",
+      "CZ_load",
+      "CZ_solar",
+      "DK_1_load",
+      "DK_1_solar",
+      "DK_1_wind",
+      "DK_2_load",
+      "DK_2_solar",
+      "DK_2_wind",
+      "FR_load",
+      "FR_solar",
+      "FR_wind",
+      "NL_load",
+      "NL_solar",
+      "NL_wind",
+      "PL_load",
+      "PL_wind"
+    ],
+    "neighbour_series_excluded": [
+      "PL_solar"
+    ],
+    "notes": [],
+    "published_before_fill": {}
+  },
+  "summary": {
+    "expected_negative_hours": 1.13,
+    "max_probability": 0.407,
+    "hours_flagged": 0,
+    "hours_without_forecast": 0,
+    "flagged_windows": []
+  },
+  "hours": [
+    {
+      "hour_utc": "2026-09-11T22:00:00+00:00",
+      "hour_local": "00:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 41973,
+      "solar_mw": 0,
+      "wind_mw": 3627,
+      "residual_load_mw": 38346,
+      "coupled_residual_mw": 128399,
+      "drivers": [
+        {
+          "feature": "res_share",
+          "contribution": -1.232
+        },
+        {
+          "feature": "renewable_share",
+          "contribution": -1.232
+        },
+        {
+          "feature": "load_forecast",
+          "contribution": -1.156
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-11T23:00:00+00:00",
+      "hour_local": "01:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 40193,
+      "solar_mw": 0,
+      "wind_mw": 3205,
+      "residual_load_mw": 36989,
+      "coupled_residual_mw": 121282,
+      "drivers": [
+        {
+          "feature": "load_forecast",
+          "contribution": -1.319
+        },
+        {
+          "feature": "res_share",
+          "contribution": -1.253
+        },
+        {
+          "feature": "renewable_share",
+          "contribution": -1.253
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T00:00:00+00:00",
+      "hour_local": "02:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 38944,
+      "solar_mw": 0,
+      "wind_mw": 3142,
+      "residual_load_mw": 35802,
+      "coupled_residual_mw": 118832,
+      "drivers": [
+        {
+          "feature": "load_forecast",
+          "contribution": -1.434
+        },
+        {
+          "feature": "res_share",
+          "contribution": -1.25
+        },
+        {
+          "feature": "renewable_share",
+          "contribution": -1.25
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T01:00:00+00:00",
+      "hour_local": "03:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 38304,
+      "solar_mw": 0,
+      "wind_mw": 3117,
+      "residual_load_mw": 35187,
+      "coupled_residual_mw": 115366,
+      "drivers": [
+        {
+          "feature": "load_forecast",
+          "contribution": -1.492
+        },
+        {
+          "feature": "res_share",
+          "contribution": -1.248
+        },
+        {
+          "feature": "renewable_share",
+          "contribution": -1.248
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T02:00:00+00:00",
+      "hour_local": "04:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 38163,
+      "solar_mw": 0,
+      "wind_mw": 3145,
+      "residual_load_mw": 35018,
+      "coupled_residual_mw": 113498,
+      "drivers": [
+        {
+          "feature": "load_forecast",
+          "contribution": -1.505
+        },
+        {
+          "feature": "res_share",
+          "contribution": -1.245
+        },
+        {
+          "feature": "renewable_share",
+          "contribution": -1.245
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T03:00:00+00:00",
+      "hour_local": "05:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 39418,
+      "solar_mw": 0,
+      "wind_mw": 3236,
+      "residual_load_mw": 36182,
+      "coupled_residual_mw": 116155,
+      "drivers": [
+        {
+          "feature": "load_forecast",
+          "contribution": -1.39
+        },
+        {
+          "feature": "res_share",
+          "contribution": -1.246
+        },
+        {
+          "feature": "renewable_share",
+          "contribution": -1.246
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T04:00:00+00:00",
+      "hour_local": "06:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 41921,
+      "solar_mw": 44,
+      "wind_mw": 3387,
+      "residual_load_mw": 38490,
+      "coupled_residual_mw": 120266,
+      "drivers": [
+        {
+          "feature": "renewable_share",
+          "contribution": -1.247
+        },
+        {
+          "feature": "res_share",
+          "contribution": -1.247
+        },
+        {
+          "feature": "load_forecast",
+          "contribution": -1.161
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T05:00:00+00:00",
+      "hour_local": "07:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 44233,
+      "solar_mw": 2489,
+      "wind_mw": 3440,
+      "residual_load_mw": 38304,
+      "coupled_residual_mw": 122029,
+      "drivers": [
+        {
+          "feature": "renewable_share",
+          "contribution": -1.08
+        },
+        {
+          "feature": "res_share",
+          "contribution": -1.08
+        },
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T06:00:00+00:00",
+      "hour_local": "08:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 47072,
+      "solar_mw": 10302,
+      "wind_mw": 3324,
+      "residual_load_mw": 33446,
+      "coupled_residual_mw": 116533,
+      "drivers": [
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        },
+        {
+          "feature": "month_sin",
+          "contribution": -0.758
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T07:00:00+00:00",
+      "hour_local": "09:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 49881,
+      "solar_mw": 20274,
+      "wind_mw": 3133,
+      "residual_load_mw": 26474,
+      "coupled_residual_mw": 103092,
+      "drivers": [
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        },
+        {
+          "feature": "month_sin",
+          "contribution": -0.758
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T08:00:00+00:00",
+      "hour_local": "10:00",
+      "probability": 0.001,
+      "flag": false,
+      "load_mw": 51483,
+      "solar_mw": 29324,
+      "wind_mw": 3735,
+      "residual_load_mw": 18423,
+      "coupled_residual_mw": 89143,
+      "drivers": [
+        {
+          "feature": "solar_forecast",
+          "contribution": 1.277
+        },
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T09:00:00+00:00",
+      "hour_local": "11:00",
+      "probability": 0.0179,
+      "flag": false,
+      "load_mw": 52120,
+      "solar_mw": 35769,
+      "wind_mw": 5062,
+      "residual_load_mw": 11289,
+      "coupled_residual_mw": 73781,
+      "drivers": [
+        {
+          "feature": "solar_forecast",
+          "contribution": 1.689
+        },
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "BE_residual",
+          "contribution": 1.005
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T10:00:00+00:00",
+      "hour_local": "12:00",
+      "probability": 0.162,
+      "flag": false,
+      "load_mw": 51359,
+      "solar_mw": 38874,
+      "wind_mw": 6536,
+      "residual_load_mw": 5949,
+      "coupled_residual_mw": 64113,
+      "drivers": [
+        {
+          "feature": "solar_forecast",
+          "contribution": 1.887
+        },
+        {
+          "feature": "BE_residual",
+          "contribution": 1.37
+        },
+        {
+          "feature": "res_share",
+          "contribution": 1.319
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T11:00:00+00:00",
+      "hour_local": "13:00",
+      "probability": 0.3922,
+      "flag": false,
+      "load_mw": 50159,
+      "solar_mw": 38959,
+      "wind_mw": 8015,
+      "residual_load_mw": 3186,
+      "coupled_residual_mw": 58303,
+      "drivers": [
+        {
+          "feature": "solar_forecast",
+          "contribution": 1.893
+        },
+        {
+          "feature": "BE_residual",
+          "contribution": 1.641
+        },
+        {
+          "feature": "res_share",
+          "contribution": 1.486
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T12:00:00+00:00",
+      "hour_local": "14:00",
+      "probability": 0.4073,
+      "flag": false,
+      "load_mw": 49000,
+      "solar_mw": 36596,
+      "wind_mw": 9298,
+      "residual_load_mw": 3106,
+      "coupled_residual_mw": 59069,
+      "drivers": [
+        {
+          "feature": "solar_forecast",
+          "contribution": 1.742
+        },
+        {
+          "feature": "BE_residual",
+          "contribution": 1.701
+        },
+        {
+          "feature": "res_share",
+          "contribution": 1.487
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T13:00:00+00:00",
+      "hour_local": "15:00",
+      "probability": 0.1429,
+      "flag": false,
+      "load_mw": 48018,
+      "solar_mw": 31393,
+      "wind_mw": 10225,
+      "residual_load_mw": 6400,
+      "coupled_residual_mw": 63535,
+      "drivers": [
+        {
+          "feature": "BE_residual",
+          "contribution": 1.673
+        },
+        {
+          "feature": "solar_forecast",
+          "contribution": 1.409
+        },
+        {
+          "feature": "res_share",
+          "contribution": 1.263
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T14:00:00+00:00",
+      "hour_local": "16:00",
+      "probability": 0.0079,
+      "flag": false,
+      "load_mw": 48229,
+      "solar_mw": 23641,
+      "wind_mw": 10718,
+      "residual_load_mw": 13871,
+      "coupled_residual_mw": 74280,
+      "drivers": [
+        {
+          "feature": "BE_residual",
+          "contribution": 1.553
+        },
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "coupled_residual",
+          "contribution": 0.918
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T15:00:00+00:00",
+      "hour_local": "17:00",
+      "probability": 0.0001,
+      "flag": false,
+      "load_mw": 49253,
+      "solar_mw": 14150,
+      "wind_mw": 10980,
+      "residual_load_mw": 24123,
+      "coupled_residual_mw": 93340,
+      "drivers": [
+        {
+          "feature": "BE_residual",
+          "contribution": 1.149
+        },
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T16:00:00+00:00",
+      "hour_local": "18:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 50243,
+      "solar_mw": 5181,
+      "wind_mw": 10842,
+      "residual_load_mw": 34221,
+      "coupled_residual_mw": 113626,
+      "drivers": [
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        },
+        {
+          "feature": "month_sin",
+          "contribution": -0.758
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T17:00:00+00:00",
+      "hour_local": "19:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 50082,
+      "solar_mw": 517,
+      "wind_mw": 11143,
+      "residual_load_mw": 38423,
+      "coupled_residual_mw": 126999,
+      "drivers": [
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        },
+        {
+          "feature": "renewable_share",
+          "contribution": -0.764
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T18:00:00+00:00",
+      "hour_local": "20:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 48866,
+      "solar_mw": 0,
+      "wind_mw": 11971,
+      "residual_load_mw": 36896,
+      "coupled_residual_mw": 126967,
+      "drivers": [
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        },
+        {
+          "feature": "month_sin",
+          "contribution": -0.758
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T19:00:00+00:00",
+      "hour_local": "21:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 46860,
+      "solar_mw": 0,
+      "wind_mw": 12619,
+      "residual_load_mw": 34241,
+      "coupled_residual_mw": 120832,
+      "drivers": [
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        },
+        {
+          "feature": "month_sin",
+          "contribution": -0.758
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T20:00:00+00:00",
+      "hour_local": "22:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 44510,
+      "solar_mw": 0,
+      "wind_mw": 13226,
+      "residual_load_mw": 31284,
+      "coupled_residual_mw": 113606,
+      "drivers": [
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "load_forecast",
+          "contribution": -0.924
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        }
+      ]
+    },
+    {
+      "hour_utc": "2026-09-12T21:00:00+00:00",
+      "hour_local": "23:00",
+      "probability": 0.0,
+      "flag": false,
+      "load_mw": 42034,
+      "solar_mw": 0,
+      "wind_mw": 13527,
+      "residual_load_mw": 28506,
+      "coupled_residual_mw": 108427,
+      "drivers": [
+        {
+          "feature": "load_forecast",
+          "contribution": -1.15
+        },
+        {
+          "feature": "is_weekend",
+          "contribution": 1.027
+        },
+        {
+          "feature": "month_cos",
+          "contribution": -0.843
+        }
+      ]
+    }
+  ]
+}

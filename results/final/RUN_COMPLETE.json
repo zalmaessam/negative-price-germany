@@ -1,0 +1,20 @@
+{
+  "finished": "2026-11-01 15:43:23",
+  "minutes": 2.4,
+  "test_start": "2024-12-31 23:00:00+00:00",
+  "test_end": "2026-09-30 21:00:00+00:00",
+  "n_hours": 15310,
+  "n_negative": 1048,
+  "decision_threshold": 0.5,
+  "lr_params": {
+    "C": 0.1
+  },
+  "xgb_params": {
+    "max_depth": 5,
+    "learning_rate": 0.03,
+    "n_estimators": 200
+  },
+  "primary": "rolling 12 months",
+  "secondary": "expanding + recency weights (half-life 180 d)",
+  "bootstrap_resamples": 1000
+}

@@ -1,0 +1,18 @@
+{
+  "eval": "val",
+  "b3_threshold_mw": 8903.552500000002,
+  "LR": {
+    "params": {
+      "C": 0.1
+    },
+    "threshold": 0.5198762529369426
+  },
+  "XGB": {
+    "params": {
+      "max_depth": 5,
+      "learning_rate": 0.03,
+      "n_estimators": 200
+    },
+    "threshold": 0.66997891664505
+  }
+}

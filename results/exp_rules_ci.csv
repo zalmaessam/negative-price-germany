@@ -1,0 +1,19 @@
+model,metric,estimate,ci_low,ci_high
+B3 | German residual-load rule (rolling 12 m),f1,0.6173913043478261,0.5435119606275491,0.7061214171036277
+B3 | German residual-load rule (rolling 12 m),pr_auc,0.7125121124772793,0.6150166951399687,0.8139829092350818
+B3 | German residual-load rule (rolling 12 m),brier,,,
+B5 | coupled residual-load rule (rolling 12 m),f1,0.7242152466367713,0.6621319138823628,0.7802762429731691
+B5 | coupled residual-load rule (rolling 12 m),pr_auc,0.8550765139255194,0.7968428840632983,0.899790644953034
+B5 | coupled residual-load rule (rolling 12 m),brier,,,
+B6 | LR on German + neighbour residual (rolling 12 m),f1,0.6640106241699867,0.5843856209150327,0.7470729851313238
+B6 | LR on German + neighbour residual (rolling 12 m),pr_auc,0.8357020301900648,0.7557083709465852,0.894036317611232
+B6 | LR on German + neighbour residual (rolling 12 m),brier,0.01956261115711185,0.014967451768234767,0.02353710236841104
+B7 | LR on both residuals + calendar (rolling 12 m),f1,0.6814621409921671,0.6174220628735149,0.7562467799442751
+B7 | LR on both residuals + calendar (rolling 12 m),pr_auc,0.8541189790615749,0.7996037084040982,0.9037883310247655
+B7 | LR on both residuals + calendar (rolling 12 m),brier,0.018294591320220394,0.013822954166949364,0.021990351904700042
+"LR | +neighbours, all features (rolling 12 m)",f1,0.7505882352941177,0.6953635585970915,0.8067222593045822
+"LR | +neighbours, all features (rolling 12 m)",pr_auc,0.8643468637037913,0.8195426347392211,0.9116628743473656
+"LR | +neighbours, all features (rolling 12 m)",brier,0.017131158135001413,0.012752172485696043,0.02040450159159599
+"XGB | +neighbours, all features (rolling 12 m)",f1,0.7338804220398594,0.6874288085304717,0.783425847257623
+"XGB | +neighbours, all features (rolling 12 m)",pr_auc,0.8608312122567705,0.821533687395752,0.9018641576011809
+"XGB | +neighbours, all features (rolling 12 m)",brier,0.018190037678154924,0.01372863368553954,0.021712953690103665

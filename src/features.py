@@ -147,6 +147,20 @@ def make_dataset(force_rebuild: bool = False) -> pd.DataFrame:
     return out
 
 
+def fill_neighbour_residual(data):
+    """Forward-fill missing neighbour residuals from PAST values only and rebuild coupled_residual.
+
+    Adds `nb_filled` = 1 where the value had to be filled, so results can be re-checked on the
+    hours with complete neighbour data. Returns (data, number_of_filled_hours).
+    Shared by the experiments, the final test run and the live prediction tool.
+    """
+    out = data.copy()
+    out["nb_filled"] = out["nb_residual_sum"].isna().astype(int)
+    out["nb_residual_sum"] = out["nb_residual_sum"].ffill()  # past values only: no leakage
+    out["coupled_residual"] = out["residual_load"] + out["nb_residual_sum"]
+    return out, int(out["nb_filled"].sum())
+
+
 if __name__ == "__main__":
     data = make_dataset(force_rebuild=True)
     print("\nShape:", data.shape)

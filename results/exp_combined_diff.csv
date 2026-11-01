@@ -1,0 +1,39 @@
+model,metric,vs,mean_diff,ci_low,ci_high,share_draws_better
+B3 | static (fit once),f1,B3 | rolling 12 months,0.005590006077232594,-0.03322295843583443,0.0437046083804325,0.6066666666666667
+B3 | static (fit once),pr_auc,B3 | rolling 12 months,0.0,0.0,0.0,0.0
+XGB | base | static (fit once),f1,B3 | rolling 12 months,0.03239434379775524,-0.01695013443202446,0.08047876444231736,0.88
+XGB | base | static (fit once),pr_auc,B3 | rolling 12 months,0.013990294250515518,-0.05689950405599673,0.08253516630931663,0.6233333333333333
+XGB | base | rolling 12 months,f1,B3 | rolling 12 months,0.07860569902993789,0.022684207428605874,0.13443131862499091,1.0
+XGB | base | rolling 12 months,pr_auc,B3 | rolling 12 months,0.08793069482015609,0.030686190984612664,0.149324161483779,1.0
+XGB | base | expanding + recency weights (half-life 180 d),f1,B3 | rolling 12 months,0.07153940687549669,0.014694268821340856,0.1354368304907668,0.9933333333333333
+XGB | base | expanding + recency weights (half-life 180 d),pr_auc,B3 | rolling 12 months,0.0727550725637472,0.012758715476611088,0.1383492134053772,0.9966666666666667
+XGB | +neighbours | static (fit once),f1,B3 | rolling 12 months,0.052091570374221845,-0.005772717491989751,0.10841497415319484,0.96
+XGB | +neighbours | static (fit once),pr_auc,B3 | rolling 12 months,0.07015625104418007,0.006996726262916371,0.134975558367546,0.98
+XGB | +neighbours | rolling 12 months,f1,B3 | rolling 12 months,0.11993958014300186,0.049817300745113764,0.1862371146318798,1.0
+XGB | +neighbours | rolling 12 months,pr_auc,B3 | rolling 12 months,0.14387820767340498,0.062408052292771174,0.2224112799016618,1.0
+XGB | +neighbours | expanding + recency weights (half-life 180 d),f1,B3 | rolling 12 months,0.11091595336377362,0.04459545137053417,0.17242529696132125,1.0
+XGB | +neighbours | expanding + recency weights (half-life 180 d),pr_auc,B3 | rolling 12 months,0.13098208271063513,0.0580998168475009,0.20264192977117745,1.0
+"XGB | +neighbours, no price levels | static (fit once)",f1,B3 | rolling 12 months,0.04498533288556226,-0.011370539321436186,0.1063295330337366,0.9166666666666666
+"XGB | +neighbours, no price levels | static (fit once)",pr_auc,B3 | rolling 12 months,0.04867645906459507,-0.021639789568281192,0.13351898512925836,0.9033333333333333
+"XGB | +neighbours, no price levels | rolling 12 months",f1,B3 | rolling 12 months,0.1360144487870161,0.05871259355761623,0.20691892338574802,1.0
+"XGB | +neighbours, no price levels | rolling 12 months",pr_auc,B3 | rolling 12 months,0.14915688370518573,0.06921926239452958,0.22683248000950382,1.0
+"XGB | +neighbours, no price levels | expanding + recency weights (half-life 180 d)",f1,B3 | rolling 12 months,0.12268502210936243,0.05109726644896721,0.1864340156753157,1.0
+"XGB | +neighbours, no price levels | expanding + recency weights (half-life 180 d)",pr_auc,B3 | rolling 12 months,0.1376049961416219,0.06259209892273478,0.20919970492283477,1.0
+LR | base | static (fit once),f1,B3 | rolling 12 months,0.02659686111438993,-0.017707216025270322,0.06927486542703098,0.9133333333333333
+LR | base | static (fit once),pr_auc,B3 | rolling 12 months,-0.00010621183976956068,-0.036782981434230005,0.037522385324595516,0.49666666666666665
+LR | base | rolling 12 months,f1,B3 | rolling 12 months,0.07241788667140264,0.025885511314407368,0.12187933820331068,0.9933333333333333
+LR | base | rolling 12 months,pr_auc,B3 | rolling 12 months,0.10863705830021511,0.05662421914090841,0.1543806593148705,1.0
+LR | base | expanding + recency weights (half-life 180 d),f1,B3 | rolling 12 months,0.07808055317306789,0.029184336537864678,0.1234712131702457,0.9966666666666667
+LR | base | expanding + recency weights (half-life 180 d),pr_auc,B3 | rolling 12 months,0.10969291356324519,0.05635276185516295,0.15776703065261846,1.0
+LR | +neighbours | static (fit once),f1,B3 | rolling 12 months,0.08288751855733653,0.0383123712852424,0.13112674903613503,1.0
+LR | +neighbours | static (fit once),pr_auc,B3 | rolling 12 months,0.06345491628958394,0.019742490791412683,0.10681578357887443,1.0
+LR | +neighbours | rolling 12 months,f1,B3 | rolling 12 months,0.13013283986139113,0.07369803898036598,0.19096892704436388,1.0
+LR | +neighbours | rolling 12 months,pr_auc,B3 | rolling 12 months,0.147844088179642,0.07958360615920428,0.21587133364711458,1.0
+LR | +neighbours | expanding + recency weights (half-life 180 d),f1,B3 | rolling 12 months,0.11934961173808181,0.06112934765477272,0.17282946360651927,1.0
+LR | +neighbours | expanding + recency weights (half-life 180 d),pr_auc,B3 | rolling 12 months,0.13991303099219227,0.07656198203090482,0.20505347250645717,1.0
+"LR | +neighbours, no price levels | static (fit once)",f1,B3 | rolling 12 months,0.08876972504339821,0.03827688580380329,0.14220950739101254,1.0
+"LR | +neighbours, no price levels | static (fit once)",pr_auc,B3 | rolling 12 months,0.06894915318444335,0.021635390298647802,0.12123432203430164,0.9966666666666667
+"LR | +neighbours, no price levels | rolling 12 months",f1,B3 | rolling 12 months,0.12301484022483926,0.06766894474569506,0.17951980315170768,1.0
+"LR | +neighbours, no price levels | rolling 12 months",pr_auc,B3 | rolling 12 months,0.14721738646362678,0.08017262492123571,0.21286540642809,1.0
+"LR | +neighbours, no price levels | expanding + recency weights (half-life 180 d)",f1,B3 | rolling 12 months,0.1180471323594459,0.06353465998045585,0.17302813160805036,1.0
+"LR | +neighbours, no price levels | expanding + recency weights (half-life 180 d)",pr_auc,B3 | rolling 12 months,0.14004969773775686,0.0767040511090301,0.20648680765425248,1.0

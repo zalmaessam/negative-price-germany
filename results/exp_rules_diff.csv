@@ -1,0 +1,11 @@
+model,metric,vs,mean_diff,ci_low,ci_high,share_draws_better
+B3 | German residual-load rule (rolling 12 m),f1,B5 | coupled residual-load rule (rolling 12 m),-0.10707396986187374,-0.17798628780487183,-0.03610303151217682,0.0033333333333333335
+B3 | German residual-load rule (rolling 12 m),pr_auc,B5 | coupled residual-load rule (rolling 12 m),-0.13804536356509425,-0.21449179473941515,-0.061941089900987775,0.0
+B6 | LR on German + neighbour residual (rolling 12 m),f1,B5 | coupled residual-load rule (rolling 12 m),-0.05913363775477587,-0.1154312524831898,-0.009755897198667814,0.016666666666666666
+B6 | LR on German + neighbour residual (rolling 12 m),pr_auc,B5 | coupled residual-load rule (rolling 12 m),-0.017764170657963454,-0.057165772433999104,0.01660572948535765,0.15666666666666668
+B7 | LR on both residuals + calendar (rolling 12 m),f1,B5 | coupled residual-load rule (rolling 12 m),-0.04202786196875957,-0.09322374291488743,0.00243267538867947,0.04666666666666667
+B7 | LR on both residuals + calendar (rolling 12 m),pr_auc,B5 | coupled residual-load rule (rolling 12 m),0.00037202882096108557,-0.028992327411031433,0.032856236769628226,0.52
+"LR | +neighbours, all features (rolling 12 m)",f1,B5 | coupled residual-load rule (rolling 12 m),0.026067896491932117,-0.024811364792700245,0.08420145727861175,0.8466666666666667
+"LR | +neighbours, all features (rolling 12 m)",pr_auc,B5 | coupled residual-load rule (rolling 12 m),0.010242245086614078,-0.021875653033902494,0.04247139698846018,0.7166666666666667
+"XGB | +neighbours, all features (rolling 12 m)",f1,B5 | coupled residual-load rule (rolling 12 m),0.008504207792887346,-0.03861638828802719,0.06486843315792247,0.6166666666666667
+"XGB | +neighbours, all features (rolling 12 m)",pr_auc,B5 | coupled residual-load rule (rolling 12 m),0.00536006774232045,-0.02588511045894883,0.042548421640053444,0.6033333333333334
