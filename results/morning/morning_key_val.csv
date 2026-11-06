@@ -1,0 +1,17 @@
+model,metric,vs,mean_diff,ci_low,ci_high,share_draws_better
+M1 + price history,f1,M0 calendar only,0.41591424086342754,0.3204197738582408,0.5094625334152457,1.0
+M1 + price history,pr_auc,M0 calendar only,0.22157582393950545,0.14312396097066934,0.2983330786159405,1.0
+M2 + yesterday's published forecasts,f1,M1 + price history,-0.0010387684482021855,-0.028283525901873535,0.025420955072018497,0.463
+M2 + yesterday's published forecasts,pr_auc,M1 + price history,0.010965722094164222,-0.022749658217424112,0.04437042167675343,0.739
+M3 + tomorrow's load forecast,f1,M2 + yesterday's published forecasts,0.005100045699373646,-0.014808102691506427,0.027290671814205424,0.677
+M3 + tomorrow's load forecast,pr_auc,M2 + yesterday's published forecasts,0.04943976481941269,0.029733332206986478,0.07193437166921803,1.0
+M2 + yesterday's published forecasts,f1,M0 calendar only,0.4148754724152253,0.32087227414330216,0.5105676911666841,1.0
+M2 + yesterday's published forecasts,pr_auc,M0 calendar only,0.2325415460336697,0.15528024031535195,0.30756990594860817,1.0
+M2 + yesterday's published forecasts,f1,B1 same hour yesterday,0.054843638409289096,-0.018977623530551112,0.1298010729783684,0.926
+M2 + yesterday's published forecasts,pr_auc,B1 same hour yesterday,0.16699533679626596,0.0852939626612188,0.24591816781865514,1.0
+M4 price history + tomorrow's load (no yesterday's forecasts),f1,M1 + price history,0.010446994397836615,-0.009612765091591218,0.03300846598851265,0.823
+M4 price history + tomorrow's load (no yesterday's forecasts),pr_auc,M1 + price history,0.01732043676853462,-0.0023331118131000297,0.03800634892461324,0.949
+M4 price history + tomorrow's load (no yesterday's forecasts),f1,M3 + tomorrow's load forecast,0.006385717146665154,-0.020847222968195366,0.03585900892645678,0.667
+M4 price history + tomorrow's load (no yesterday's forecasts),pr_auc,M3 + tomorrow's load forecast,-0.04308505014504229,-0.07699921005260241,-0.007074738206295775,0.008
+"FULL (needs evening forecasts, NOT available in the morning)",f1,M2 + yesterday's published forecasts,0.33573918095442845,0.2340590268084558,0.4325788994079793,1.0
+"FULL (needs evening forecasts, NOT available in the morning)",pr_auc,M2 + yesterday's published forecasts,0.3581561352954808,0.2682319808398113,0.4476966517571254,1.0

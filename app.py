@@ -7,11 +7,13 @@ Run from the repository root:
 
 Tabs
     Forecast         tomorrow's hourly probability of a negative price (live, or the latest saved one)
+    What-if          you supply your own weather expectation (relative to yesterday); the model answers
     Replay           any past day: what the tool would have said, next to what really happened
     Track record     the append-only prediction log scored against realised prices
     Data timing      when the inputs are actually published (the evidence behind the 'before the auction' claim)
     About            method, validated performance, limitations
 """
+import asyncio
 import os
 import sys
 from datetime import date
@@ -19,6 +21,12 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+
+if sys.platform == "win32":          # avoids event-loop errors when Streamlit runs on Windows
+    try:
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    except Exception:  # noqa: BLE001  (policy API changes in newer Python versions)
+        pass
 
 ROOT = Path(__file__).resolve().parent
 os.chdir(ROOT)
@@ -158,8 +166,8 @@ st.caption("Hourly probability that the day-ahead electricity price is below zer
            "Useful for planning flexible electricity use, if the inputs are available early enough "
            "(see the Data timing tab).")
 
-tab_live, tab_replay, tab_track, tab_timing, tab_about = st.tabs(
-    ["Forecast", "Replay a past day", "Track record", "Data timing", "About"])
+tab_live, tab_whatif, tab_replay, tab_track, tab_timing, tab_about = st.tabs(
+    ["Forecast", "What-if", "Replay a past day", "Track record", "Data timing", "About"])
 
 # ---- Forecast ---------------------------------------------------------------
 with tab_live:
@@ -187,6 +195,54 @@ with tab_live:
         record = dl.load_record(dict(saved)[choice])
         st.markdown(f"### Delivery day {record['target_date']}")
         show_forecast(record, threshold)
+
+# ---- What-if ----------------------------------------------------------------
+with tab_whatif:
+    st.subheader("What-if explorer")
+    st.markdown(
+        "Before noon the real wind and solar forecasts for tomorrow are usually not published yet. "
+        "Here **you** supply your own expectation, for example from a weather app: the model starts from "
+        "**yesterday's published forecasts** and scales them. 'Solar 1.3x' means you expect 30% more solar "
+        "than yesterday. The result is a **scenario, not a forecast**, and nothing is logged.")
+    wi_mode = st.radio("Day to explore", ["Tomorrow (live data)", "A past day (replay)"])
+    wi_replay = wi_mode.startswith("A past")
+    if wi_replay:
+        try:
+            wi_max = get_prices().dropna().index.max().tz_convert(dl.LOCAL_TZ).date()
+        except Exception:  # noqa: BLE001
+            wi_max = date(2026, 9, 30)
+        wi_day = st.date_input("Past day", value=date(2025, 6, 15), min_value=date(2020, 3, 1),
+                               max_value=wi_max, key="wi_day").isoformat()
+    else:
+        wi_day = (pd.Timestamp.now(tz=dl.LOCAL_TZ).normalize() + pd.Timedelta(days=1)).date().isoformat()
+    st.caption(f"Delivery day: {wi_day}")
+    wc1, wc2 = st.columns(2)
+    f_solar = wc1.slider("German solar vs yesterday", 0.0, 2.0, 1.0, 0.05)
+    f_wind = wc1.slider("German wind vs yesterday", 0.0, 2.0, 1.0, 0.05)
+    f_load = wc1.slider("German electricity demand vs yesterday", 0.8, 1.2, 1.0, 0.01)
+    f_nb_solar = wc2.slider("Neighbours' solar vs yesterday", 0.0, 2.0, 1.0, 0.05)
+    f_nb_wind = wc2.slider("Neighbours' wind vs yesterday", 0.0, 2.0, 1.0, 0.05)
+    if st.button("Compute scenario"):
+        with st.spinner("Computing ..."):
+            try:
+                import predict_tomorrow as pt
+
+                rec = pt.forecast_day(
+                    wi_day, source="replay" if wi_replay else "api",
+                    scenario={"solar": f_solar, "wind": f_wind, "load": f_load,
+                              "nb_solar": f_nb_solar, "nb_wind": f_nb_wind})
+                st.session_state["whatif"] = {"record": rec, "replay": wi_replay}
+            except Exception as e:  # noqa: BLE001
+                st.session_state["whatif"] = None
+                st.error(f"Could not compute the scenario: {e}")
+    wi = st.session_state.get("whatif")
+    if wi:
+        st.markdown(f"### Scenario for {wi['record']['target_date']}")
+        try:
+            wi_prices = get_prices() if wi["replay"] else None
+        except Exception:  # noqa: BLE001
+            wi_prices = None
+        show_forecast(wi["record"], threshold, prices=wi_prices)
 
 # ---- Replay -----------------------------------------------------------------
 with tab_replay:
@@ -264,6 +320,10 @@ with tab_timing:
         st.markdown(f"**Reading so far:** {head}")
         for line in details:
             st.caption(line)
+        st.markdown("**When does each input appear?** (Berlin time, day before delivery)")
+        st.dataframe(dl.input_timing(summ), hide_index=True)
+        st.caption("The true publication time lies between the two columns. 'Varies by day = yes' means the "
+                   "order is reversed on some days, so the publication time is not constant.")
         show = summ[["checked_berlin", "target_date", "German_load", "German_wind_solar", "Neighbours",
                      "All_inputs_complete", "Tomorrows_price_public", "hours_before_gate_closure"]]
         st.dataframe(show.rename(columns={
@@ -301,4 +361,5 @@ with tab_about:
         "- **One market, one model:** trained on Germany-Luxembourg since 2019; structural changes can degrade it, "
         "which is why it is refitted monthly.\n"
         "- **15-minute products** since October 2025 are averaged to hourly prices.\n"
+        "- **What-if results are scenarios,** driven by the factors you choose; they are not forecasts.\n"
         "- **Not advice:** a research prototype, not a trading or purchasing recommendation.")

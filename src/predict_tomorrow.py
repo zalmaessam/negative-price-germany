@@ -8,6 +8,7 @@ predict_tomorrow.py  --  day-before negative-price early-warning forecast for Ge
     python src/predict_tomorrow.py --score              # fill in realised prices and print running accuracy
     python src/predict_tomorrow.py --check-availability # which inputs for tomorrow are published right now?
     python src/predict_tomorrow.py --schedule           # today's check times in Berlin and Cairo time
+    python src/predict_tomorrow.py --replay 2026-06-20 --scenario "solar=1.4,wind=0.7"   # what-if (not saved)
 
 What it does (the frozen configuration validated in final.py):
   1. Gets day-ahead FORECASTS of load, wind and solar for Germany and 9 neighbours, plus the
@@ -175,6 +176,56 @@ def load_replay_raw(target_date):
 
 
 # ---------------------------------------------------------------------------
+# What-if scenarios: the user supplies their own expectation about tomorrow's weather
+# ---------------------------------------------------------------------------
+SCENARIO_DEFAULT = {"solar": 1.0, "wind": 1.0, "load": 1.0, "nb_solar": 1.0, "nb_wind": 1.0, "nb_load": 1.0}
+
+
+def parse_scenario(text):
+    """'solar=1.3,wind=0.8' -> dict with defaults for everything not given."""
+    out = dict(SCENARIO_DEFAULT)
+    for part in text.split(","):
+        if not part.strip():
+            continue
+        key, _, val = part.partition("=")
+        key = key.strip()
+        if key not in SCENARIO_DEFAULT:
+            raise SystemExit(f"Unknown scenario key '{key}'. Allowed: {', '.join(SCENARIO_DEFAULT)}")
+        out[key] = float(val)
+    return out
+
+
+def apply_scenario(raw_de, raw_nb, target_date, scenario):
+    """Replace the target day's forecast inputs by the PREVIOUS day's published values times the user's factors.
+
+    Hours are matched by local clock hour, so clock-change days work. Nothing published for the target day
+    is used: the scenario is entirely 'yesterday, scaled by your expectation'.
+    """
+    sc = {**SCENARIO_DEFAULT, **scenario}
+    t_start, t_end = day_bounds(target_date)
+    prev = (pd.Timestamp(target_date) - pd.Timedelta(days=1)).date().isoformat()
+    p_start, p_end = day_bounds(prev)
+    de, nb = raw_de.copy(), raw_nb.copy()
+    tgt = de.index[(de.index >= t_start) & (de.index < t_end)]
+    prv = de.index[(de.index >= p_start) & (de.index < p_end)]
+    first_by_hour = {}
+    for ts in prv:
+        first_by_hour.setdefault(ts.tz_convert(LOCAL_TZ).strftime("%H"), ts)
+    src, last = [], prv[0]
+    for ts in tgt:
+        last = first_by_hour.get(ts.tz_convert(LOCAL_TZ).strftime("%H"), last)
+        src.append(last)
+    de_mult = {"load_forecast": sc["load"], "solar_forecast": sc["solar"],
+               "wind_onshore_forecast": sc["wind"], "wind_offshore_forecast": sc["wind"]}
+    for col, m in de_mult.items():
+        de.loc[tgt, col] = de.loc[src, col].to_numpy() * m
+    for col in nb.columns:
+        m = sc["nb_load"] if col.endswith("_load") else sc["nb_solar"] if col.endswith("_solar") else sc["nb_wind"]
+        nb.loc[tgt, col] = nb.loc[src, col].to_numpy() * m
+    return de, nb
+
+
+# ---------------------------------------------------------------------------
 # Section 3: features, model, prediction
 # ---------------------------------------------------------------------------
 def build_frame(raw_de, raw_nb, t_start):
@@ -288,12 +339,15 @@ def compute_status(day, used, avail):
 # ---------------------------------------------------------------------------
 # Section 4: one forecast
 # ---------------------------------------------------------------------------
-def forecast_day(target_date, source="api", refresh=False, threshold=DEFAULT_THRESHOLD):
+def forecast_day(target_date, source="api", refresh=False, threshold=DEFAULT_THRESHOLD, scenario=None):
     target_date = pd.Timestamp(target_date).date().isoformat()
     t_start, t_end = day_bounds(target_date)
     as_of = month_start_utc(target_date)
     raw_de, raw_nb, avail = (fetch_live_raw(target_date, refresh) if source == "api"
                              else load_replay_raw(target_date))
+    if scenario:
+        raw_de, raw_nb = apply_scenario(raw_de, raw_nb, target_date, scenario)
+        avail = {}
     df, feats, used = build_frame(raw_de, raw_nb, t_start)
     model, info = train_model(df, as_of, feats)
 
@@ -328,9 +382,13 @@ def forecast_day(target_date, source="api", refresh=False, threshold=DEFAULT_THR
 
     now = pd.Timestamp.now(tz="UTC")
     gate = pd.Timestamp((pd.Timestamp(target_date) - pd.Timedelta(days=1)).date().isoformat() + " 12:00", tz=LOCAL_TZ)
-    before_gate = bool(now < gate) if source == "api" else None
+    before_gate = bool(now < gate) if source == "api" and not scenario else None
     status = compute_status(day, used, avail)
-    if source == "api" and not before_gate:
+    if scenario:
+        changed = ", ".join(f"{k} x{v:g}" for k, v in {**SCENARIO_DEFAULT, **scenario}.items() if v != 1.0) or "no changes"
+        status["notes"].insert(0, "WHAT-IF SCENARIO, NOT A FORECAST: the target day's inputs are yesterday's published "
+                                  f"values scaled by your factors ({changed}).")
+    elif source == "api" and not before_gate:
         status["notes"].append("Generated after 12:00 Berlin time on the day before: the real prices may already "
                                "be public, so this forecast is NOT prospective.")
 
@@ -350,7 +408,10 @@ def forecast_day(target_date, source="api", refresh=False, threshold=DEFAULT_THR
             "drivers": drivers[i],
         })
     record = {
-        "target_date": target_date, "source": source, "generated_at_utc": now.isoformat(),
+        "target_date": target_date, "source": f"scenario_{source}" if scenario else source,
+        "scenario": ({**SCENARIO_DEFAULT, **scenario, "template_day":
+                      (pd.Timestamp(target_date) - pd.Timedelta(days=1)).date().isoformat()} if scenario else None),
+        "generated_at_utc": now.isoformat(),
         "before_gate_closure": before_gate, "default_threshold": threshold, "model": info, "status": status,
         "summary": {"expected_negative_hours": round(float(np.nansum(prob)), 2),
                     "max_probability": round(float(np.nanmax(prob)), 3), "hours_flagged": int(flags.sum()),
@@ -550,6 +611,8 @@ def main():
     ap.add_argument("--check-availability", action="store_true",
                     help="log how many hours of each input are published for the target day, right now")
     ap.add_argument("--schedule", action="store_true", help="print today's check times in Berlin and Cairo time")
+    ap.add_argument("--scenario", help='what-if factors vs yesterday, e.g. "solar=1.3,wind=0.8" (keys: '
+                                       'solar, wind, load, nb_solar, nb_wind, nb_load). Not saved, not logged.')
     ap.add_argument("--score", action="store_true", help="fill realised prices into the log and print accuracy")
     ap.add_argument("--threshold", type=float, default=DEFAULT_THRESHOLD)
     ap.add_argument("--refresh", action="store_true", help="ignore the cached live download")
@@ -567,22 +630,23 @@ def main():
     if a.verify:
         return sys.exit(0 if verify(a.verify) else 1)
 
+    scenario = parse_scenario(a.scenario) if a.scenario else None
     if a.replay:
-        record = forecast_day(a.replay, source="replay", threshold=a.threshold)
+        record = forecast_day(a.replay, source="replay", threshold=a.threshold, scenario=scenario)
     else:
         target = a.date or (pd.Timestamp.now(tz=LOCAL_TZ).normalize() + pd.Timedelta(days=1)).date().isoformat()
-        record = forecast_day(target, source="api", refresh=a.refresh, threshold=a.threshold)
-        if not a.no_log:
+        record = forecast_day(target, source="api", refresh=a.refresh, threshold=a.threshold, scenario=scenario)
+        if not a.no_log and not scenario:
             append_log(record)
 
-    path = save_record(record)
+    path = None if scenario else save_record(record)
     s = record["summary"]
     print(f"\nForecast for {record['target_date']} ({record['source']}) | data status: {record['status']['level']}")
     for n in record["status"]["notes"]:
         print("  note:", n)
     print(f"Expected negative hours: {s['expected_negative_hours']} | highest hourly probability: {s['max_probability']}")
     print("Flagged windows (probability >= %.2f): %s" % (a.threshold, s["flagged_windows"] or "none"))
-    print(f"Saved {path}")
+    print(f"Saved {path}" if path else "(what-if scenario: not saved, not logged)")
 
 
 if __name__ == "__main__":

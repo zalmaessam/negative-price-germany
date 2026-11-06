@@ -1,0 +1,85 @@
+model,metric,vs,mean_diff,ci_low,ci_high,share_draws_better
+B1 same hour yesterday,f1,M0 calendar only,0.3600318340059363,0.2789576465887524,0.43634267336636656,1.0
+B1 same hour yesterday,pr_auc,M0 calendar only,0.06554620923740373,-0.04224710849728511,0.17488875289156458,0.879
+B2 same hour last week,f1,M0 calendar only,0.3200991127354894,0.24192699192699194,0.3955932685967751,1.0
+B2 same hour last week,pr_auc,M0 calendar only,-0.003932373893437463,-0.09981161453114136,0.08926653167279767,0.469
+M1 + price history,f1,M0 calendar only,0.41591424086342754,0.3204197738582408,0.5094625334152457,1.0
+M1 + price history,pr_auc,M0 calendar only,0.22157582393950545,0.14312396097066934,0.2983330786159405,1.0
+M2 + yesterday's published forecasts,f1,M0 calendar only,0.4148754724152253,0.32087227414330216,0.5105676911666841,1.0
+M2 + yesterday's published forecasts,pr_auc,M0 calendar only,0.2325415460336697,0.15528024031535195,0.30756990594860817,1.0
+M3 + tomorrow's load forecast,f1,M0 calendar only,0.41997551811459904,0.3299318486518695,0.5099610462988015,1.0
+M3 + tomorrow's load forecast,pr_auc,M0 calendar only,0.28198131085308237,0.20618743849223756,0.35739624407696263,1.0
+M4 price history + tomorrow's load (no yesterday's forecasts),f1,M0 calendar only,0.4263612352612641,0.333870523415978,0.5176289831618696,1.0
+M4 price history + tomorrow's load (no yesterday's forecasts),pr_auc,M0 calendar only,0.23889626070804007,0.16540755131701515,0.3134053269545289,1.0
+"FULL (needs evening forecasts, NOT available in the morning)",f1,M0 calendar only,0.7506146533696537,0.6909065586224361,0.8023391812865497,1.0
+"FULL (needs evening forecasts, NOT available in the morning)",pr_auc,M0 calendar only,0.5906976813291505,0.5107709183185641,0.6638746277717661,1.0
+B1 same hour yesterday,f1,M1 + price history,-0.05588240685749129,-0.1309293024650444,0.015216753466139422,0.075
+B1 same hour yesterday,pr_auc,M1 + price history,-0.15602961470210175,-0.24069600974622563,-0.06803106977278617,0.0
+B2 same hour last week,f1,M1 + price history,-0.09581512812793809,-0.19065259205466278,0.0013451203078695376,0.027
+B2 same hour last week,pr_auc,M1 + price history,-0.22550819783294293,-0.32016737236232046,-0.1261308213589813,0.0
+M0 calendar only,f1,M1 + price history,-0.41591424086342754,-0.5094625334152457,-0.32041977385824083,0.0
+M0 calendar only,pr_auc,M1 + price history,-0.22157582393950545,-0.2983330786159405,-0.14312396097066937,0.0
+M2 + yesterday's published forecasts,f1,M1 + price history,-0.0010387684482021855,-0.028283525901873535,0.025420955072018497,0.463
+M2 + yesterday's published forecasts,pr_auc,M1 + price history,0.010965722094164222,-0.022749658217424112,0.04437042167675343,0.739
+M3 + tomorrow's load forecast,f1,M1 + price history,0.00406127725117146,-0.02659570179866288,0.03327471908433956,0.615
+M3 + tomorrow's load forecast,pr_auc,M1 + price history,0.06040548691357691,0.0253634327767838,0.0957829727220016,1.0
+M4 price history + tomorrow's load (no yesterday's forecasts),f1,M1 + price history,0.010446994397836615,-0.009612765091591218,0.03300846598851265,0.823
+M4 price history + tomorrow's load (no yesterday's forecasts),pr_auc,M1 + price history,0.01732043676853462,-0.0023331118131000297,0.03800634892461324,0.949
+"FULL (needs evening forecasts, NOT available in the morning)",f1,M1 + price history,0.33470041250622623,0.23135565570926261,0.4377746065771412,1.0
+"FULL (needs evening forecasts, NOT available in the morning)",pr_auc,M1 + price history,0.3691218573896451,0.27752764461044455,0.4610105979183672,1.0
+B1 same hour yesterday,f1,M2 + yesterday's published forecasts,-0.054843638409289096,-0.12980107297836843,0.0189776235305511,0.074
+B1 same hour yesterday,pr_auc,M2 + yesterday's published forecasts,-0.16699533679626596,-0.24591816781865514,-0.08529396266121883,0.0
+B2 same hour last week,f1,M2 + yesterday's published forecasts,-0.09477635967973592,-0.1943082179828581,0.0034456422406814917,0.031
+B2 same hour last week,pr_auc,M2 + yesterday's published forecasts,-0.23647391992710715,-0.33035529960602555,-0.13959441187728747,0.0
+M0 calendar only,f1,M2 + yesterday's published forecasts,-0.4148754724152253,-0.5105676911666842,-0.32087227414330216,0.0
+M0 calendar only,pr_auc,M2 + yesterday's published forecasts,-0.2325415460336697,-0.3075699059486082,-0.15528024031535195,0.0
+M1 + price history,f1,M2 + yesterday's published forecasts,0.0010387684482021855,-0.025420955072018504,0.028283525901873535,0.536
+M1 + price history,pr_auc,M2 + yesterday's published forecasts,-0.010965722094164222,-0.04437042167675343,0.022749658217424112,0.261
+M3 + tomorrow's load forecast,f1,M2 + yesterday's published forecasts,0.005100045699373646,-0.014808102691506427,0.027290671814205424,0.677
+M3 + tomorrow's load forecast,pr_auc,M2 + yesterday's published forecasts,0.04943976481941269,0.029733332206986478,0.07193437166921803,1.0
+M4 price history + tomorrow's load (no yesterday's forecasts),f1,M2 + yesterday's published forecasts,0.0114857628460388,-0.01964540588556529,0.0426552693742264,0.777
+M4 price history + tomorrow's load (no yesterday's forecasts),pr_auc,M2 + yesterday's published forecasts,0.006354714674370397,-0.03216508738251127,0.0477154053939036,0.627
+"FULL (needs evening forecasts, NOT available in the morning)",f1,M2 + yesterday's published forecasts,0.33573918095442845,0.2340590268084558,0.4325788994079793,1.0
+"FULL (needs evening forecasts, NOT available in the morning)",pr_auc,M2 + yesterday's published forecasts,0.3581561352954808,0.2682319808398113,0.4476966517571254,1.0
+B1 same hour yesterday,f1,M3 + tomorrow's load forecast,-0.05994368410866275,-0.13664392742663875,0.014243545329376486,0.063
+B1 same hour yesterday,pr_auc,M3 + tomorrow's load forecast,-0.21643510161567867,-0.29790712049131446,-0.13028547610706157,0.0
+B2 same hour last week,f1,M3 + tomorrow's load forecast,-0.09987640537910955,-0.19270779523780399,-0.007546930185760614,0.018
+B2 same hour last week,pr_auc,M3 + tomorrow's load forecast,-0.28591368474651985,-0.3760668355815255,-0.18729469275191138,0.0
+M0 calendar only,f1,M3 + tomorrow's load forecast,-0.41997551811459904,-0.5099610462988015,-0.3299318486518695,0.0
+M0 calendar only,pr_auc,M3 + tomorrow's load forecast,-0.28198131085308237,-0.35739624407696263,-0.20618743849223756,0.0
+M1 + price history,f1,M3 + tomorrow's load forecast,-0.00406127725117146,-0.03327471908433956,0.026595701798662868,0.384
+M1 + price history,pr_auc,M3 + tomorrow's load forecast,-0.06040548691357691,-0.0957829727220016,-0.025363432776783806,0.0
+M2 + yesterday's published forecasts,f1,M3 + tomorrow's load forecast,-0.005100045699373646,-0.027290671814205435,0.014808102691506427,0.314
+M2 + yesterday's published forecasts,pr_auc,M3 + tomorrow's load forecast,-0.04943976481941269,-0.07193437166921803,-0.02973333220698648,0.0
+M4 price history + tomorrow's load (no yesterday's forecasts),f1,M3 + tomorrow's load forecast,0.006385717146665154,-0.020847222968195366,0.03585900892645678,0.667
+M4 price history + tomorrow's load (no yesterday's forecasts),pr_auc,M3 + tomorrow's load forecast,-0.04308505014504229,-0.07699921005260241,-0.007074738206295775,0.008
+"FULL (needs evening forecasts, NOT available in the morning)",f1,M3 + tomorrow's load forecast,0.3306391352550548,0.22660527378295328,0.43016140630035904,1.0
+"FULL (needs evening forecasts, NOT available in the morning)",pr_auc,M3 + tomorrow's load forecast,0.30871637047606815,0.22440193976750347,0.3933120941931886,1.0
+B1 same hour yesterday,f1,M4 price history + tomorrow's load (no yesterday's forecasts),-0.06632940125532791,-0.14400010386490697,0.008650292734355818,0.049
+B1 same hour yesterday,pr_auc,M4 price history + tomorrow's load (no yesterday's forecasts),-0.17335005147063637,-0.2629901348322352,-0.0824554924179963,0.0
+B2 same hour last week,f1,M4 price history + tomorrow's load (no yesterday's forecasts),-0.10626212252577472,-0.19832212209357028,-0.01575680207967528,0.01
+B2 same hour last week,pr_auc,M4 price history + tomorrow's load (no yesterday's forecasts),-0.24282863460147758,-0.3356065766707239,-0.14005227071422915,0.0
+M0 calendar only,f1,M4 price history + tomorrow's load (no yesterday's forecasts),-0.4263612352612641,-0.5176289831618696,-0.333870523415978,0.0
+M0 calendar only,pr_auc,M4 price history + tomorrow's load (no yesterday's forecasts),-0.23889626070804007,-0.3134053269545289,-0.1654075513170152,0.0
+M1 + price history,f1,M4 price history + tomorrow's load (no yesterday's forecasts),-0.010446994397836615,-0.03300846598851265,0.009612765091591216,0.174
+M1 + price history,pr_auc,M4 price history + tomorrow's load (no yesterday's forecasts),-0.01732043676853462,-0.03800634892461325,0.0023331118131000167,0.051
+M2 + yesterday's published forecasts,f1,M4 price history + tomorrow's load (no yesterday's forecasts),-0.0114857628460388,-0.04265526937422641,0.01964540588556529,0.222
+M2 + yesterday's published forecasts,pr_auc,M4 price history + tomorrow's load (no yesterday's forecasts),-0.006354714674370397,-0.047715405393903614,0.03216508738251125,0.373
+M3 + tomorrow's load forecast,f1,M4 price history + tomorrow's load (no yesterday's forecasts),-0.006385717146665154,-0.03585900892645678,0.020847222968195363,0.333
+M3 + tomorrow's load forecast,pr_auc,M4 price history + tomorrow's load (no yesterday's forecasts),0.04308505014504229,0.007074738206295767,0.0769992100526024,0.992
+"FULL (needs evening forecasts, NOT available in the morning)",f1,M4 price history + tomorrow's load (no yesterday's forecasts),0.3242534181083896,0.2204498740938309,0.4244517388615907,1.0
+"FULL (needs evening forecasts, NOT available in the morning)",pr_auc,M4 price history + tomorrow's load (no yesterday's forecasts),0.3518014206211104,0.2637196977632274,0.44492064476715115,1.0
+B2 same hour last week,f1,B1 same hour yesterday,-0.03993272127044681,-0.13782345668610332,0.05633067889643118,0.205
+B2 same hour last week,pr_auc,B1 same hour yesterday,-0.06947858313084118,-0.17707556483487535,0.0464233236594261,0.101
+M0 calendar only,f1,B1 same hour yesterday,-0.3600318340059363,-0.43634267336636656,-0.2789576465887524,0.0
+M0 calendar only,pr_auc,B1 same hour yesterday,-0.06554620923740373,-0.1748887528915646,0.042247108497285094,0.121
+M1 + price history,f1,B1 same hour yesterday,0.05588240685749129,-0.015216753466139429,0.1309293024650444,0.925
+M1 + price history,pr_auc,B1 same hour yesterday,0.15602961470210175,0.06803106977278617,0.24069600974622557,1.0
+M2 + yesterday's published forecasts,f1,B1 same hour yesterday,0.054843638409289096,-0.018977623530551112,0.1298010729783684,0.926
+M2 + yesterday's published forecasts,pr_auc,B1 same hour yesterday,0.16699533679626596,0.0852939626612188,0.24591816781865514,1.0
+M3 + tomorrow's load forecast,f1,B1 same hour yesterday,0.05994368410866275,-0.01424354532937649,0.13664392742663875,0.937
+M3 + tomorrow's load forecast,pr_auc,B1 same hour yesterday,0.21643510161567867,0.13028547610706154,0.2979071204913144,1.0
+M4 price history + tomorrow's load (no yesterday's forecasts),f1,B1 same hour yesterday,0.06632940125532791,-0.008650292734355856,0.14400010386490694,0.951
+M4 price history + tomorrow's load (no yesterday's forecasts),pr_auc,B1 same hour yesterday,0.17335005147063637,0.0824554924179963,0.26299013483223516,1.0
+"FULL (needs evening forecasts, NOT available in the morning)",f1,B1 same hour yesterday,0.3905828193637175,0.30449744671534,0.4812900732657642,1.0
+"FULL (needs evening forecasts, NOT available in the morning)",pr_auc,B1 same hour yesterday,0.5251514720917467,0.43027414951237597,0.617846247918095,1.0

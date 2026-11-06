@@ -307,6 +307,30 @@ def timing_verdict(summary):
     return head, details
 
 
+def input_timing(summary):
+    """Per input group: the latest reading (Berlin time of day) that was still incomplete and the earliest
+    reading that was complete, pooled over all target days. The true publication time lies in between,
+    unless the order is reversed, which means it varies from day to day."""
+    s = summary.copy()
+    loc = s["checked_utc"].dt.tz_convert(LOCAL_TZ)
+    s["tod"] = loc.dt.hour + loc.dt.minute / 60
+    s["tod_str"] = loc.dt.strftime("%H:%M")
+    rows = []
+    for label, col in [("Day-ahead price (auction result)", "Tomorrows_price_public"),
+                       ("German load forecast", "German_load"),
+                       ("German wind + solar forecast", "German_wind_solar"),
+                       ("Neighbours' forecasts", "Neighbours")]:
+        inc, com = s[~s[col]], s[s[col]]
+        late_inc = inc.loc[inc["tod"].idxmax(), "tod_str"] if len(inc) else "never incomplete"
+        early_com = com.loc[com["tod"].idxmin(), "tod_str"] if len(com) else "not yet"
+        varies = len(inc) > 0 and len(com) > 0 and inc["tod"].max() > com["tod"].min()
+        rows.append({"Input for tomorrow": label, "Readings": len(s),
+                     "Latest reading still incomplete (Berlin)": late_inc,
+                     "Earliest reading complete (Berlin)": early_com,
+                     "Varies by day": "yes" if varies else "no"})
+    return pd.DataFrame(rows)
+
+
 # ---------------------------------------------------------------------------
 # Validated performance (for the About tab)
 # ---------------------------------------------------------------------------

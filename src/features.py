@@ -147,6 +147,53 @@ def make_dataset(force_rebuild: bool = False) -> pd.DataFrame:
     return out
 
 
+# ---------------------------------------------------------------------------
+# "Morning information" features: only what is known BEFORE the auction (about 10:30 on D-1).
+# The target day's own wind/solar forecasts are published later, so they are NOT used. Instead:
+# calendar, prices up to D-1, and what the market ALREADY published for D-1 (persistence of weather).
+# ---------------------------------------------------------------------------
+MORNING_CAL = ["hour_sin", "hour_cos", "month_sin", "month_cos", "is_weekend", "is_holiday"]
+MORNING_HIST = ["price_lag_24", "price_lag_168", "neg_count_prev_day", "price_prev_day_mean"]
+MORNING_PERSIST = ["res_lag24", "solar_lag24", "wind_lag24", "coupled_lag24",
+                   "res_prevday_mean", "res_prevday_min", "solar_prevday_max", "coupled_prevday_mean"]
+MORNING_LOAD = ["load_forecast"]   # the target day's load forecast: usually published earlier; verify with the monitor
+
+
+def add_morning_features(df):
+    """Persistence-of-yesterday features. Needs residual_load, solar_forecast, wind_total_forecast and
+    (optionally) coupled_residual. Returns a DataFrame aligned to df.index.
+
+    * *_lag24: the value 24 hours earlier, blanked when that moment lies inside the target day itself
+      (the extra hour of a 25-hour day), exactly like the price lags.
+    * *_prevday_*: summaries of the PREVIOUS local day's published forecasts.
+    """
+    full_idx = pd.date_range(df.index.min(), df.index.max(), freq="h", tz="UTC")
+    cols = [c for c in ("residual_load", "solar_forecast", "wind_total_forecast", "coupled_residual") if c in df.columns]
+    x = df[cols].reindex(full_idx)
+    idx_local = full_idx.tz_convert(LOCAL_TZ)
+    day_start_utc = idx_local.normalize().tz_convert("UTC")
+    day_naive = idx_local.normalize().tz_localize(None)
+    prev_day = day_naive - pd.Timedelta(days=1)
+
+    def prev_agg(series, how):
+        return series.groupby(day_naive).agg(how).reindex(prev_day).to_numpy()
+
+    out = pd.DataFrame(index=full_idx)
+    out["res_lag24"] = safe_lag(x["residual_load"], 24, day_start_utc)
+    out["solar_lag24"] = safe_lag(x["solar_forecast"], 24, day_start_utc)
+    out["wind_lag24"] = safe_lag(x["wind_total_forecast"], 24, day_start_utc)
+    out["res_prevday_mean"] = prev_agg(x["residual_load"], "mean")
+    out["res_prevday_min"] = prev_agg(x["residual_load"], "min")
+    out["solar_prevday_max"] = prev_agg(x["solar_forecast"], "max")
+    if "coupled_residual" in x:
+        out["coupled_lag24"] = safe_lag(x["coupled_residual"], 24, day_start_utc)
+        out["coupled_prevday_mean"] = prev_agg(x["coupled_residual"], "mean")
+    else:  # no neighbour data: keep the columns so feature lists stay valid
+        out["coupled_lag24"] = np.nan
+        out["coupled_prevday_mean"] = np.nan
+    return out.reindex(df.index)
+
+
 def fill_neighbour_residual(data):
     """Forward-fill missing neighbour residuals from PAST values only and rebuild coupled_residual.
 
